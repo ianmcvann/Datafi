@@ -1,5 +1,5 @@
 package main
-
+//Copyright 2019 Ian McVann
 import (
 	"fmt"
 	"github.com/buger/jsonparser"
@@ -30,7 +30,7 @@ func makeTickerResponse(ticker string, data string) Response {
 		[]string{"result", ticker, "t", "[0]"},
 		[]string{"result", ticker, "l", "[0]"},
 		[]string{"result", ticker, "h", "[0]"},
-		[]string{"result", ticker, "o", "[0]"},
+		[]string{"result", ticker, "o"},
 	}
 	jsonparser.EachKey(dataByte, func(idx int, value []byte, vt jsonparser.ValueType, err error){
 		switch idx {
@@ -66,11 +66,4 @@ func getPairInfo(ticker string) (string, string) {
 		data, _ := ioutil.ReadAll(response.Body)
 		return ticker, string(data)
 	}
-}
-func main() {
-	fmt.Println("Starting the application...")
-	ticker, response := getPairInfo("BCHUSD")
-	r := makeTickerResponse(ticker, response)
-	fmt.Printf("Response: %v \n", r)
-	fmt.Println("Terminating the application...")
 }
