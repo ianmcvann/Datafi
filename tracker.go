@@ -35,7 +35,6 @@ func (t Tracker) testConnection() {
 	fmt.Println("Successfully connected!")
 }
 func (t Tracker) track() {
-	getPairInfo(t.Ticker)
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
 		"password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
@@ -44,7 +43,7 @@ func (t Tracker) track() {
 		panic(err)
 	}
 	sqlStatement := `CREATE TABLE IF NOT EXISTS "kraken"
-	(index integer, dtime text, ticker text, ask real, bid real, close real, volume real, volume_weighted_avg_price real, trade_count integer, low real, high real, open real)`
+	(id serial primary key, dtime text, ticker text, ask real, bid real, close real, volume real, volume_weighted_avg_price real, trade_count integer, low real, high real, open real)`
 	_, err = db.Exec(sqlStatement, t.Exchange)
 	if err != nil {
 		panic(err)

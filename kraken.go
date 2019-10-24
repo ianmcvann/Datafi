@@ -6,7 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 )
-type Response struct {
+
+type KrakenResponse struct {
 	Ticker string
 	Ask string
 	Bid string
@@ -18,8 +19,8 @@ type Response struct {
 	Low string
 	Close string
 }
-func makeTickerResponse(ticker string, data string) Response {
-	var response Response
+func makeKrakenTickerResponse(ticker string, data string) KrakenResponse {
+	var response KrakenResponse
 	dataByte := []byte(data)
 	paths := [][]string{
 		[]string{"result", ticker, "a", "[0]"},
@@ -57,7 +58,7 @@ func makeTickerResponse(ticker string, data string) Response {
 	response.Ticker = ticker
 	return response
 }
-func getPairInfo(ticker string) (string, string) {
+func getKrakenPairInfo(ticker string) (string, string) {
 	request := fmt.Sprintf("https://api.kraken.com/0/public/Ticker?pair=%v", ticker)
 	response, err := http.Get(request)
 	if err != nil {
