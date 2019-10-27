@@ -20,6 +20,7 @@ type CexResponse struct {
 	PriceChangePercentage string  `json:"priceChangePercentage"`
 	Pair                  string  `json:"pair"`
 }
+
 func makeCexTickerResponse(ticker string, data string) CexResponse {
 	var response CexResponse
 	dataByte := []byte(data)
@@ -31,7 +32,7 @@ func makeCexTickerResponse(ticker string, data string) CexResponse {
 }
 func getCexPairInfo(ticker string) (string, string) {
 	firstTicker := ticker[0:3]
-	secondTicker  := ticker[len(ticker)-3:]
+	secondTicker := ticker[len(ticker)-3:]
 	request := fmt.Sprintf("https://cex.io/api/ticker/%v/%v", firstTicker, secondTicker)
 	response, err := http.Get(request)
 	if err != nil {
